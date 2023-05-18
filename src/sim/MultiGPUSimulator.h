@@ -9,7 +9,7 @@
 
 class MultiGPUSimulator : public SimulatorBase {
 public:
-	MultiGPUSimulator(Network *network, real dt);
+	MultiGPUSimulator(Network *network, real dt,int devicecnt=4);
 	~MultiGPUSimulator();
 	using SimulatorBase::run;
 	virtual int run(real time, FireInfo &log);
@@ -18,6 +18,7 @@ public:
 protected:
 	int rank;
 	int rankSize;
+	int devicecnt;
 };
 
 #endif /* MULTIGPUSIMULATOR_H */

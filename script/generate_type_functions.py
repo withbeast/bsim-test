@@ -39,7 +39,7 @@ for line in func_file_content:
                 func_names.append(get_name.group(1))
                 func_mains.append(line.replace("TYPESIZE", ""))
             else:
-                print line
+                print (line)
 #print func_names
 #print func_mains
 

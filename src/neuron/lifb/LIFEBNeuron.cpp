@@ -4,6 +4,7 @@
 #include "../../third_party/json/json.h"
 #include "LIFEBNeuron.h"
 #include "GLIFEBNeurons.h"
+#include <iostream>
 
 const Type LIFEBNeuron::type = LIFEB;
 
@@ -99,6 +100,7 @@ int LIFEBNeuron::reset(SimInfo &info)
 
 	_C_E = _C_E * (_CE - _Cm);
 	_C_I = _C_I * (_CI - _Cm);
+	// std::cout<<_C_E<<","<<_C_I<<std::endl;
 
 	_refrac_time = static_cast<int>(_tau_refrac/dt);
 	_refrac_step = 0;

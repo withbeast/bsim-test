@@ -4,7 +4,7 @@
 #include "../../gpu_utils/runtime.h"
 
 #include "GLIFB.h"
-
+#include <stdio.h>
 
 __global__ void find_lifeb_neuron(GLIFEBNeurons *d_neurons, int num, int start_id)
 {
@@ -93,10 +93,10 @@ __global__ void update_lifeb_neuron(GLIFEBNeurons *d_neurons, int num, int start
 		//d_neurons->p_vm[nid] = d_neurons->p_vm[nid] * d_neurons->p_C1[nid] + d_neurons->p_C2[nid] * I;
 
 		//d_neurons->p_i_syn[nid] = 0;
-
+		// printf("CE:%f,CI:%f\n",d_neurons->p_CE[nid],d_neurons->p_CI[nid]);
 		d_neurons->p_i_E[nid] *= d_neurons->p_CE[nid];
 		d_neurons->p_i_I[nid] *= d_neurons->p_CI[nid];
-
+		printf("refrac:%d\n",d_neurons->p_refrac_time[nid] - 1);
 		fired = d_neurons->p_vm[nid] >= d_neurons->p_v_thresh[nid];
 
 		gFireCount[gnid] += fired;
@@ -185,7 +185,7 @@ __global__ void update_all_lifeb_neuron(GLIFEBNeurons *d_neurons, int num, int s
 			//real I = gNeuronInput[gnid] + d_neurons->p_i_tmp[nid];
 			//d_neurons->p_vm[nid] = d_neurons->p_vm[nid] * d_neurons->p_C1[nid] + d_neurons->p_C2[nid] * I;
 			//d_neurons->p_i_syn[nid] = 0;
-
+			
 			d_neurons->p_vm[nid] = d_neurons->p_Cm[nid] * d_neurons->p_vm[nid] + d_neurons->p_v_tmp[nid] + d_neurons->p_i_E[nid] * d_neurons->p_C_E[nid] + d_neurons->p_i_I[nid] * d_neurons->p_C_I[nid];
 
 			gXInput[gnid] += gNeuronInput[gnid] + gNeuronInput_I[gnid];

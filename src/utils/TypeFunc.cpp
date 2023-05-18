@@ -14,7 +14,7 @@ int (*allocType[])(void *, int) = { allocConstant, allocPoisson, allocArray, all
 
 int (*freeType[])(void *) = { freeConstant, freePoisson, freeArray, freeDecide, freeFFT, freeMem, freeMax, freeLIFE, freeTJ, freeStatic, freeLIFEB};
 
-int (*addTypeConnection[])(void *, int *) = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, addStaticConnection, NULL};
+int (*addTypeConnection[])(void *, int *) = { NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, addStaticConnection};
 
 void (*mpiSendType[])(void *data, int rank, int offset, int size) = { mpiSendConstant, mpiSendPoisson, mpiSendArray, mpiSendDecide, mpiSendFFT, mpiSendMem, mpiSendMax, mpiSendLIFE, mpiSendTJ, mpiSendStatic, mpiSendLIFEB};
 

@@ -28,8 +28,9 @@ pthread_barrier_t setup_barrier;
 
 CrossNodeDataGPU * global_cross_data_gpu;
 
-MultiGPUSimulator::MultiGPUSimulator(Network *network, real dt) : SimulatorBase(network, dt)
+MultiGPUSimulator::MultiGPUSimulator(Network *network, real dt,int devicecnt) : SimulatorBase(network, dt)
 {
+	this->devicecnt=devicecnt;
 }
 
 MultiGPUSimulator::~MultiGPUSimulator()
@@ -43,8 +44,11 @@ int MultiGPUSimulator::run(real time, FireInfo &log)
 	int sim_cycle = round(time/dt);
 	reset();
 
-	int device_count = 4;
+	int device_count = 1;
 	checkCudaErrors(cudaGetDeviceCount(&device_count));
+	if(device_count>devicecnt){
+		device_count=devicecnt;
+	}
 	assert(device_count != 0);
 	for (int i=0; i<device_count; i++) {
 		for (int j=0; j<device_count; j++) {
@@ -282,6 +286,7 @@ void * run_thread(void *para) {
 	if (network->_node_idx == 0)
 	{
 		double tsim = t.stop();
+		// printf("time:%f\n",tsim);
 		printf("\t\"simtime\": %f,\n", tsim / (network->_dt * network->_sim_cycle));
 	}
 	gettimeofday(&te, NULL);
@@ -309,10 +314,16 @@ void * run_thread(void *para) {
 		printf("Open file Sim.log failed\n");
 		return NULL;
 	}
-
+	int sum=0;
 	for (int i=0; i<nodeNeuronNum; i++) {
 		fprintf(rate_file, "%d \t", rate[i]);
+		sum+=rate[i];
 	}
+	printf("%d:fire cnt:%d\n",network->_node_idx,sum);
+	printf("%d:fire rate:%f hz\n",network->_node_idx,(float)sum/nodeNeuronNum);
+	// std::cout<<"neu num:"<<nodeNeuronNum<<std::endl;
+	// std::cout<<network->_node_idx<<"fire rate:"<<(float)sum/nodeNeuronNum<<"hz"<<std::endl;
+
 
 	free(rate);
 	fclose(rate_file);
