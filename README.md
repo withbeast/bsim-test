@@ -1,4 +1,4 @@
-This is our fork of the [BSim simulator](https://github.com/CRAFT-THU/BSim) used to implement the benchmarks for our [IJCNN 2021 paper](https://bautembach.de/#multi-spice). You can find the bechmarking code in [`test/gpu/lif_unit_test.cpp`](https://github.com/denniskb/bsim/blob/master/test/gpu/lif_unit_test.cpp).
+fork from bsim
 
 # BSim
 
