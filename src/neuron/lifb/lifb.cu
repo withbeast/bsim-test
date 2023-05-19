@@ -96,7 +96,7 @@ __global__ void update_lifeb_neuron(GLIFEBNeurons *d_neurons, int num, int start
 		// printf("CE:%f,CI:%f\n",d_neurons->p_CE[nid],d_neurons->p_CI[nid]);
 		d_neurons->p_i_E[nid] *= d_neurons->p_CE[nid];
 		d_neurons->p_i_I[nid] *= d_neurons->p_CI[nid];
-		printf("refrac:%d\n",d_neurons->p_refrac_time[nid] - 1);
+		// printf("reset:%f,thres:%f\n",d_neurons->p_v_reset[nid],d_neurons->p_v_thresh[nid]);
 		fired = d_neurons->p_vm[nid] >= d_neurons->p_v_thresh[nid];
 
 		gFireCount[gnid] += fired;

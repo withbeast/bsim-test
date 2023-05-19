@@ -283,7 +283,7 @@ void * run_thread(void *para) {
 	}
 	cudaDeviceSynchronize();
 	pthread_barrier_wait(&cycle_barrier);
-	if (network->_node_idx == 0)
+	// if (network->_node_idx == 0)
 	{
 		double tsim = t.stop();
 		// printf("time:%f\n",tsim);
@@ -315,12 +315,13 @@ void * run_thread(void *para) {
 		return NULL;
 	}
 	int sum=0;
+	// printf("%d:nodes:%d\n",network->_node_idx,nodeNeuronNum);
 	for (int i=0; i<nodeNeuronNum; i++) {
 		fprintf(rate_file, "%d \t", rate[i]);
 		sum+=rate[i];
 	}
 	printf("%d:fire cnt:%d\n",network->_node_idx,sum);
-	printf("%d:fire rate:%f hz\n",network->_node_idx,(float)sum/nodeNeuronNum);
+	printf("%d:fire rate:%f hz\n",network->_node_idx,(float)sum/nodeNeuronNum/(network->_dt * network->_sim_cycle));
 	// std::cout<<"neu num:"<<nodeNeuronNum<<std::endl;
 	// std::cout<<network->_node_idx<<"fire rate:"<<(float)sum/nodeNeuronNum<<"hz"<<std::endl;
 

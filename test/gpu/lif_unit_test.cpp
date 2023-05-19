@@ -95,7 +95,6 @@ void make_brunel(Network & c, int const n)
 
 	float const Wex =  0.0001 * 20000 / n;
 	float const Win = -0.0005 * 20000 / n;
-
 	connect(c, 0, 1, P->getNum(), E->getNum(), 0.1f, Wex, 0.0015f); // P->E
 	connect(c, 0, 2, P->getNum(), I->getNum(), 0.1f, Wex, 0.0015f); // P->I
 
@@ -114,6 +113,8 @@ void make_vogels(Network & c, int const n)
 	float const Wex = 0.4 * 16000000 / n / n;
 	float const Win = -5.1 * 16000000 / n / n;
 
+	
+
 	connect(c, 0, 0, E->getNum(), E->getNum(), 0.02f, Wex, 0.0008f); // E->E
 	connect(c, 0, 1, E->getNum(), I->getNum(), 0.02f, Wex, 0.0008f); // E->I
 
@@ -129,18 +130,16 @@ void make_synth(Network & c, int const n, float const p_fire, float const p_conn
 
 int main(){
 	
-	int nsyn=100;
+	int nsyn=5000000;
 	int N=static_cast<int>(std::sqrt((float)nsyn/(0.1*0.5)));
 	Network c;
 	make_brunel(c,N);
-	std::cout<<c.totalSynapseNum<<std::endl;
-	
-
+	std::cout<<"syns:"<<c.totalSynapseNum<<std::endl;
 	MGSim sim(&c,0.0001,1);
 	time_t sim_s,sim_e;
 	std::cout<<"startup"<<std::endl;
 	sim_s=clock();
-	sim.run(0.001);
+	sim.run(1);
 	sim_e=clock();
 	float sim_time=(float)(sim_e-sim_s)/1000/1000;
 	std::cout<<"sim:"<<sim_time<<std::endl;
