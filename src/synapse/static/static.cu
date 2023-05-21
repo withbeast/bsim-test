@@ -77,6 +77,7 @@ __global__ void update_dense_static_hit(GStaticSynapses *d_synapses, int num, in
 		for (int idx = 0; idx < fired_size_block; idx++) {
 			int nid = gFiredTable[time_idx*gFiredTableCap + (block_idx)*num_per_block + idx];
 			int start_loc = gConnection->delayStart[delta_t + nid * MAX_DELAY];
+			
 			int synapseNum = gConnection->delayNum[delta_t + nid * MAX_DELAY];
 			if (threadIdx.x == 0) {
 				gLayerInput[nid]++;

@@ -49,7 +49,72 @@
 #include "../../src/utils/timer.h"
 
 #include <memory>
-
+#include <sstream>
+class parser
+{
+private:
+    std::unordered_map<std::string,std::string> params;
+public:
+    //突触数量
+    static std::string NSYN;
+    //划分区域数量
+    static std::string NPART;
+    //划分方式
+    static std::string MODEL;
+    //输出文件名
+    static std::string FILE;
+    //输出文件路径
+    static std::string PREFIX;
+    static std::string NET;
+    parser(int args,char* argv[]){
+        //默认突触数量:10000
+        params[NSYN]="10000";
+        //默认划分区域:1
+        params[NPART]="1";
+        //默认划分方式:metis
+        params[MODEL]="metis";
+        //默认输出文件
+        params[FILE]="tmp.txt";
+        //默认输出文件路径
+        params[PREFIX]="../../benchdata/";
+        params[NET]="brunel";
+        //获取输入参数
+        for(int i=1;i<args;i++){
+            char* arg=argv[i];
+            std::string name;
+            std::string value;
+            bool first=true;
+            for(int j=0;arg[j]!='\0';j++){
+                if(arg[j]=='='){first=false;continue;}
+                if(first)name.push_back(arg[j]);
+                else value.push_back(arg[j]);
+            }
+            params[name]=value;
+        }
+    }
+    ~parser(){}
+    std::string getStr(std::string name){
+        if(!params.count(name))return "";
+        return params[name];
+    }
+    size_t getNum(std::string name){
+        if(!params.count(name))return -1;
+        std::stringstream ss(params[name]);
+        size_t res;
+        ss>>res;
+        return res;
+    }
+    bool getBool(std::string name){
+        if(!params.count(name))return false;
+        return (params[name]=="y");
+    }
+};
+std::string parser::NSYN="--nsyn";
+std::string parser::NPART="--npart";
+std::string parser::MODEL="--model";
+std::string parser::FILE="--file";
+std::string parser::PREFIX="--prefix";
+std::string parser::NET="--net";
 
 using namespace std;
 using namespace spice::util;
@@ -95,14 +160,15 @@ void make_brunel(Network & c, int const n)
 
 	float const Wex =  0.0001 * 20000 / n;
 	float const Win = -0.0005 * 20000 / n;
-	connect(c, 0, 1, P->getNum(), E->getNum(), 0.1f, Wex, 0.0015f); // P->E
-	connect(c, 0, 2, P->getNum(), I->getNum(), 0.1f, Wex, 0.0015f); // P->I
+	float const delay= 0.0015f;
+	connect(c, 0, 1, P->getNum(), E->getNum(), 0.1f, Wex, delay); // P->E
+	connect(c, 0, 2, P->getNum(), I->getNum(), 0.1f, Wex, delay); // P->I
 
-	connect(c, 1, 1, E->getNum(), E->getNum(), 0.1f, Wex, 0.0015f); // E->E
-	connect(c, 1, 2, E->getNum(), I->getNum(), 0.1f, Wex, 0.0015f); // E->I
+	connect(c, 1, 1, E->getNum(), E->getNum(), 0.1f, Wex, delay); // E->E
+	connect(c, 1, 2, E->getNum(), I->getNum(), 0.1f, Wex, delay); // E->I
 
-	connect(c, 2, 1, I->getNum(), E->getNum(), 0.1f, Win, 0.0015f); // I->E
-	connect(c, 2, 2, I->getNum(), I->getNum(), 0.1f, Win, 0.0015f); // I->I
+	connect(c, 2, 1, I->getNum(), E->getNum(), 0.1f, Win, delay); // I->E
+	connect(c, 2, 2, I->getNum(), I->getNum(), 0.1f, Win, delay); // I->I
 }
 
 void make_vogels(Network & c, int const n)
@@ -128,20 +194,31 @@ void make_synth(Network & c, int const n, float const p_fire, float const p_conn
 	connect(c, 0, 0, P->getNum(), P->getNum(), p_connect, 1, delay * 0.0001); // E->E
 }
 
-int main(){
+int main(int argc,char* argv[]){
+	parser par(argc,argv);
+	srand(time(0));
 	
-	int nsyn=5000000;
-	int N=static_cast<int>(std::sqrt((float)nsyn/(0.1*0.5)));
-	Network c;
-	make_brunel(c,N);
+	int nsyn=par.getNum(parser::NSYN);
+    int N=10;
+    Network c;
+    timer build;
+    if(par.getStr(parser::NET)=="brunel"){
+        N=static_cast<int>(std::sqrt((float)nsyn/(0.1*0.5)));
+        make_brunel(c,N);
+        std::cout<<"make brunel"<<std::endl;
+    }else{
+        N=static_cast<int>(std::sqrt((float)nsyn/(0.02)));
+        make_vogels(c,N);
+        std::cout<<"make vogel"<<std::endl;
+    }
+	std::cout<<"build time:"<<build.stop()<<" s"<<std::endl;
+	std::cout<<"neus:"<<N<<std::endl;
 	std::cout<<"syns:"<<c.totalSynapseNum<<std::endl;
-	MGSim sim(&c,0.0001,1);
-	time_t sim_s,sim_e;
+    int npart=par.getNum(parser::NPART);
+    std::cout<<"npart:"<<npart<<std::endl;
+	MGSim sim(&c,0.0001,npart);
 	std::cout<<"startup"<<std::endl;
-	sim_s=clock();
 	sim.run(1);
-	sim_e=clock();
-	float sim_time=(float)(sim_e-sim_s)/1000/1000;
-	std::cout<<"sim:"<<sim_time<<std::endl;
+	std::cout<<"end"<<std::endl;
 	return 0;
 }

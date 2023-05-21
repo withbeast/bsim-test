@@ -4,7 +4,7 @@
 #include "../../gpu_utils/runtime.h"
 
 #include "GLIF.h"
-
+#include <stdio.h>
 
 __global__ void find_life_neuron(GLIFENeurons *d_neurons, int num, int start_id)
 {
@@ -23,7 +23,9 @@ __global__ void find_life_neuron(GLIFENeurons *d_neurons, int num, int start_id)
 
 		d_neurons->p_i_E[idx] += gNeuronInput[idx+start_id] - d_neurons->p_i_E[idx] * 0.02f;
 		d_neurons->p_i_I[idx] += -gNeuronInput_I[idx+start_id] - d_neurons->p_i_I[idx] * 0.01f;
-
+		// if(gNeuronInput[idx+start_id])
+		// d_neurons->p_i_E[idx]*=0.98;
+		// d_neurons->p_i_I[idx]*=0.99;
 		bool actived = d_neurons->p_refrac_step[idx] <= 0;
 
 		if (actived) {
@@ -114,9 +116,11 @@ __global__ void update_life_neuron(GLIFENeurons *d_neurons, int num, int start_i
 			d_neurons->p_vm[nid] = d_neurons->p_v_reset[nid];
 		} else {
 			gXInput[gnid] += gNeuronInput[gnid] + gNeuronInput_I[gnid];
+			// if(nid==1)
+			// 	printf("vm:%f,vthres:%f,vreset:%f,refrac:%d\n",d_neurons->p_vm[nid],d_neurons->p_v_thresh[nid],d_neurons->p_v_reset[nid],d_neurons->p_refrac_time[nid] - 1);
 			float const V = d_neurons->p_vm[nid];
 			d_neurons->p_vm[nid] += ((-0.06f - V) +
-			                        d_neurons->p_i_E[nid] * (0 - V) +
+			                        d_neurons->p_i_E[nid] * (0.0f - V) +
 			                        d_neurons->p_i_I[nid] * (-0.08f - V) +
 			                        0.02f) * 0.005f;
 		}
