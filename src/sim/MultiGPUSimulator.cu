@@ -184,19 +184,19 @@ void * run_thread(void *para) {
 	waited = true;
 	if (except) return NULL;
 	timer t;
-	double trans=0.0;
-	double neus=0.0;
-	double syns=0.0;
-	double crosses=0.0;
+	// double trans=0.0;
+	// double neus=0.0;
+	// double syns=0.0;
+	// double crosses=0.0;
 	for (int time=0; time<network->_sim_cycle; time++) {
-		timer neu;
+		// timer neu;
 		for (int i=0; i<nTypeNum; i++) {
 			assert(c_pGpuNet->neuronNums[i+1]-c_pGpuNet->neuronNums[i] > 0);
 			cudaUpdateType[pCpuNet->nTypes[i]](c_pGpuNet->pNeurons[i], c_pGpuNet->neuronNums[i+1]-c_pGpuNet->neuronNums[i], c_pGpuNet->neuronNums[i], &updateSize[c_pGpuNet->nTypes[i]]);
 		}
 		
 		checkCudaErrors(cudaDeviceSynchronize());
-		neus+=neu.stop();
+		// neus+=neu.stop();
 		//gettimeofday(&t0, NULL);
 		pthread_barrier_wait(&cycle_barrier);
 		//gettimeofday(&t1, NULL);
@@ -212,7 +212,7 @@ void * run_thread(void *para) {
 		//		copyFromGPU<int>(global_cross_data[offset]._fired_n_idxs, c_g_global_cross_data + allNeuronNum * i, global_cross_data[offset]._fired_n_num);
 		//	}
 		//}
-		timer tran;
+		// timer tran;
 		cudaDeliverNeurons(c_g_idx2index, c_g_cross_index2idx, c_g_global_cross_data, c_g_fired_n_num, network->_node_num, allNeuronNum);
 		checkCudaErrors(cudaMemcpy(global_cross_data_gpu->_fired_num + network->_node_idx * network->_node_num, c_g_fired_n_num, sizeof(int)*network->_node_num, cudaMemcpyDeviceToHost));
 		//gettimeofday(&t3, NULL);
@@ -225,7 +225,7 @@ void * run_thread(void *para) {
 			}
 		}
 		// printf("tran\n");
-		trans+=tran.stop();
+		// trans+=tran.stop();
 		//gettimeofday(&t7, NULL);
 
 		//gpu_cpy_time += (t3.tv_sec - t2.tv_sec) + (t3.tv_usec - t2.tv_usec)/1000000.0;
@@ -244,13 +244,13 @@ void * run_thread(void *para) {
 			copyFromGPU<real>(c_vm, c_g_vm, c_pGpuNet->neuronNums[copy_idx+1]-c_pGpuNet->neuronNums[copy_idx]);
 		}
 #endif
-		timer syn;
+		// timer syn;
 		for (int i=0; i<sTypeNum; i++) {
 			assert(c_pGpuNet->synapseNums[i+1]-c_pGpuNet->synapseNums[i] > 0);
 			cudaUpdateType[pCpuNet->sTypes[i]](c_pGpuNet->pSynapses[i], c_pGpuNet->synapseNums[i+1]-c_pGpuNet->synapseNums[i], c_pGpuNet->synapseNums[i], &updateSize[pCpuNet->sTypes[i]]);
 		}
 		checkCudaErrors(cudaDeviceSynchronize());
-		syns+=syn.stop();
+		// syns+=syn.stop();
 		//gettimeofday(&t4, NULL);
 		pthread_barrier_wait(&cycle_barrier);
 		//gettimeofday(&t5, NULL);
@@ -266,14 +266,14 @@ void * run_thread(void *para) {
 		//	copyToGPU(c_g_cross_id, global_cross_data[dataIdx]._fired_n_idxs, global_cross_data[dataIdx]._fired_n_num);
 		//	addCrossNeurons(c_g_cross_id, global_cross_data[dataIdx]._fired_n_num);
 		//}
-		timer cross;
+		// timer cross;
 		for (int i=0; i< network->_node_num; i++) {
 			int i2idx = network->_node_idx + network->_node_num * i;
 			if (global_cross_data_gpu->_fired_num[i2idx] > 0) {
 				addCrossNeurons(global_cross_data_gpu->_fired_arrays[i2idx], global_cross_data_gpu->_fired_num[i2idx]);
 			}
 		}
-		crosses+=cross.stop();
+		// crosses+=cross.stop();
 		
 		//gettimeofday(&t9, NULL);
 		//copy_time += (t9.tv_sec - t8.tv_sec) + (t9.tv_usec - t8.tv_usec)/1000000.0;
@@ -297,7 +297,7 @@ void * run_thread(void *para) {
 		update_time<<<1, 1>>>();
 	}
 	cudaDeviceSynchronize();
-	printf("%d,all time:%f\n",network->_node_idx,t.stop());
+	printf("part%d:sim time:%f\n",network->_node_idx,t.stop());
 	pthread_barrier_wait(&cycle_barrier);
 	// if (network->_node_idx == 0)
 	// {
@@ -336,12 +336,12 @@ void * run_thread(void *para) {
 		fprintf(rate_file, "%d \t", rate[i]);
 		sum+=rate[i];
 	}
-	printf("%d:fire cnt:%d\n",network->_node_idx,sum);
-	printf("%d:fire rate:%f hz\n",network->_node_idx,(float)sum/nodeNeuronNum/(network->_dt * network->_sim_cycle));
-	printf("%d,trans time:%f\n",network->_node_idx,trans);
-	printf("%d,neus time:%f\n",network->_node_idx,neus);
-	printf("%d,syns time:%f\n",network->_node_idx,syns);
-	printf("%d,cross time:%f\n",network->_node_idx,crosses);
+	// printf("%d:fire cnt:%d\n",network->_node_idx,sum);
+	// printf("%d:fire rate:%f hz\n",network->_node_idx,(float)sum/nodeNeuronNum/(network->_dt * network->_sim_cycle));
+	// printf("%d,trans time:%f\n",network->_node_idx,trans);
+	// printf("%d,neus time:%f\n",network->_node_idx,neus);
+	// printf("%d,syns time:%f\n",network->_node_idx,syns);
+	// printf("%d,cross time:%f\n",network->_node_idx,crosses);
 	
 	// std::cout<<"neu num:"<<nodeNeuronNum<<std::endl;
 	// std::cout<<network->_node_idx<<"fire rate:"<<(float)sum/nodeNeuronNum<<"hz"<<std::endl;
