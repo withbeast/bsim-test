@@ -195,7 +195,7 @@ void * run_thread(void *para) {
 			cudaUpdateType[pCpuNet->nTypes[i]](c_pGpuNet->pNeurons[i], c_pGpuNet->neuronNums[i+1]-c_pGpuNet->neuronNums[i], c_pGpuNet->neuronNums[i], &updateSize[c_pGpuNet->nTypes[i]]);
 		}
 		
-		checkCudaErrors(cudaDeviceSynchronize());
+		// checkCudaErrors(cudaDeviceSynchronize());
 		// neus+=neu.stop();
 		//gettimeofday(&t0, NULL);
 		pthread_barrier_wait(&cycle_barrier);
@@ -249,7 +249,7 @@ void * run_thread(void *para) {
 			assert(c_pGpuNet->synapseNums[i+1]-c_pGpuNet->synapseNums[i] > 0);
 			cudaUpdateType[pCpuNet->sTypes[i]](c_pGpuNet->pSynapses[i], c_pGpuNet->synapseNums[i+1]-c_pGpuNet->synapseNums[i], c_pGpuNet->synapseNums[i], &updateSize[pCpuNet->sTypes[i]]);
 		}
-		checkCudaErrors(cudaDeviceSynchronize());
+		// checkCudaErrors(cudaDeviceSynchronize());
 		// syns+=syn.stop();
 		//gettimeofday(&t4, NULL);
 		pthread_barrier_wait(&cycle_barrier);
