@@ -188,6 +188,8 @@ void * run_thread(void *para) {
 	// double neus=0.0;
 	// double syns=0.0;
 	// double crosses=0.0;
+	// time_t sim_s,sim_e;
+	// sim_s=clock();
 	for (int time=0; time<network->_sim_cycle; time++) {
 		// timer neu;
 		for (int i=0; i<nTypeNum; i++) {
@@ -297,7 +299,9 @@ void * run_thread(void *para) {
 		update_time<<<1, 1>>>();
 	}
 	cudaDeviceSynchronize();
-	printf("part%d:sim time:%f\n",network->_node_idx,t.stop());
+	printf("part%d:sim time:%f s\n",network->_node_idx,t.stop());
+	// sim_e=clock();
+	// printf("part%d:sim time:%f s\n",network->_node_idx,(float)(sim_e-sim_s)/1000/1000);
 	pthread_barrier_wait(&cycle_barrier);
 	// if (network->_node_idx == 0)
 	// {
@@ -337,7 +341,7 @@ void * run_thread(void *para) {
 		sum+=rate[i];
 	}
 	// printf("%d:fire cnt:%d\n",network->_node_idx,sum);
-	// printf("%d:fire rate:%f hz\n",network->_node_idx,(float)sum/nodeNeuronNum/(network->_dt * network->_sim_cycle));
+	printf("%d:fire rate:%f hz\n",network->_node_idx,(float)sum/nodeNeuronNum/(network->_dt * network->_sim_cycle));
 	// printf("%d,trans time:%f\n",network->_node_idx,trans);
 	// printf("%d,neus time:%f\n",network->_node_idx,neus);
 	// printf("%d,syns time:%f\n",network->_node_idx,syns);

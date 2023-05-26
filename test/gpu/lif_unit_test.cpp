@@ -66,6 +66,7 @@ public:
     //输出文件路径
     static std::string PREFIX;
     static std::string NET;
+    static std::string RATE;
     parser(int args,char* argv[]){
         //默认突触数量:10000
         params[NSYN]="10000";
@@ -78,6 +79,7 @@ public:
         //默认输出文件路径
         params[PREFIX]="../../benchdata/";
         params[NET]="brunel";
+        params[RATE]="0.005";
         //获取输入参数
         for(int i=1;i<args;i++){
             char* arg=argv[i];
@@ -104,6 +106,13 @@ public:
         ss>>res;
         return res;
     }
+    float getFloat(std::string name){
+        if(!params.count(name))return -1;
+        std::stringstream ss(params[name]);
+        float res;
+        ss>>res;
+        return res;
+    }
     bool getBool(std::string name){
         if(!params.count(name))return false;
         return (params[name]=="y");
@@ -115,6 +124,7 @@ std::string parser::MODEL="--model";
 std::string parser::FILE="--file";
 std::string parser::PREFIX="--prefix";
 std::string parser::NET="--net";
+std::string parser::RATE="--rate";
 
 using namespace std;
 using namespace spice::util;
@@ -152,15 +162,15 @@ void connect(Network & net,
 	}
 }
 
-void make_brunel(Network & c, int const n)
+void make_brunel(Network & c, int const n,float rate)
 {
-	auto P = c.createPopulation(n*5/10, CompositeNeuron<PoissonNeuron, StaticSynapse>(PoissonNeuron(0.002f, 0), 1, 1));
+	auto P = c.createPopulation(n*5/10, CompositeNeuron<PoissonNeuron, StaticSynapse>(PoissonNeuron(rate, 0), 1, 1));
 	auto E = c.createPopulation(n*4/10, CompositeNeuron<LIFEBNeuron, StaticSynapse>(LIFEBNeuron(0, 0, 0, 0, 0, 0.002f, 0, 0, 0.02f, 0), 1, 1));
 	auto I = c.createPopulation(n*1/10, CompositeNeuron<LIFEBNeuron, StaticSynapse>(LIFEBNeuron(0, 0, 0, 0, 0, 0.002f, 0, 0, 0.02f, 0), 1, 1));
 
 	float const Wex =  0.0001 * 20000 / n;
 	float const Win = -0.0005 * 20000 / n;
-	float const delay= 0.0015f;
+	float const delay= 0.0016f;
 	connect(c, 0, 1, P->getNum(), E->getNum(), 0.1f, Wex, delay); // P->E
 	connect(c, 0, 2, P->getNum(), I->getNum(), 0.1f, Wex, delay); // P->I
 
@@ -173,8 +183,8 @@ void make_brunel(Network & c, int const n)
 
 void make_vogels(Network & c, int const n)
 {
-	auto E = c.createPopulation(n*8/10, CompositeNeuron<LIFENeuron, StaticSynapse>(LIFENeuron(-0.06f, -0.06f, -0.06f, 0, 0, 0.005f, 0, 0, -0.05f, 0), 1, 1));
-	auto I = c.createPopulation(n*2/10, CompositeNeuron<LIFENeuron, StaticSynapse>(LIFENeuron(-0.06f, -0.06f, -0.06f, 0, 0, 0.005f, 0, 0, -0.05f, 0), 1, 1));
+	auto E = c.createPopulation(n*8/10, CompositeNeuron<LIFEBNeuron, StaticSynapse>(LIFEBNeuron(-0.06f, -0.06f, -0.06f, 0, 0, 0.005f, 0, 0, -0.02f, 0), 1, 1));
+	auto I = c.createPopulation(n*2/10, CompositeNeuron<LIFEBNeuron, StaticSynapse>(LIFEBNeuron(-0.06f, -0.06f, -0.06f, 0, 0, 0.005f, 0, 0, -0.02f, 0), 1, 1));
 
 	float const Wex = 0.4 * 16000000 / n / n;
 	float const Win = -5.1 * 16000000 / n / n;
@@ -197,28 +207,29 @@ void make_synth(Network & c, int const n, float const p_fire, float const p_conn
 int main(int argc,char* argv[]){
 	parser par(argc,argv);
 	srand(time(0));
-	
+	std::cout<<"==========="<<std::endl;
+    std::cout<<"model:"<<par.getStr(parser::NET)<<std::endl;
 	int nsyn=par.getNum(parser::NSYN);
+    std::cout<<"nsyn:"<<nsyn<<std::endl;
+    int npart=par.getNum(parser::NPART);
+    std::cout<<"npart:"<<npart<<std::endl;
     int N=10;
     Network c;
     timer build;
     if(par.getStr(parser::NET)=="brunel"){
         N=static_cast<int>(std::sqrt((float)nsyn/(0.1*0.5)));
-        make_brunel(c,N);
-        std::cout<<"make brunel"<<std::endl;
+        float rate=par.getFloat(parser::RATE);
+        std::cout<<"rate:"<<rate<<std::endl;
+        make_brunel(c,N,rate);
+        
     }else{
         N=static_cast<int>(std::sqrt((float)nsyn/(0.02)));
         make_vogels(c,N);
-        std::cout<<"make vogel"<<std::endl;
     }
 	std::cout<<"build time:"<<build.stop()<<" s"<<std::endl;
-	std::cout<<"neus:"<<N<<std::endl;
-	std::cout<<"syns:"<<c.totalSynapseNum<<std::endl;
-    int npart=par.getNum(parser::NPART);
-    std::cout<<"npart:"<<npart<<std::endl;
 	MGSim sim(&c,0.0001,npart);
-	std::cout<<"startup"<<std::endl;
 	sim.run(1);
 	std::cout<<"end"<<std::endl;
+    std::cout<<"==========="<<std::endl;
 	return 0;
 }

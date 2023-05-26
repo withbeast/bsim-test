@@ -115,7 +115,7 @@ __global__ void update_life_neuron(GLIFENeurons *d_neurons, int num, int start_i
 			d_neurons->p_refrac_step[nid] = d_neurons->p_refrac_time[nid] - 1;
 			d_neurons->p_vm[nid] = d_neurons->p_v_reset[nid];
 		} else {
-			gXInput[gnid] += gNeuronInput[gnid] + gNeuronInput_I[gnid];
+			// gXInput[gnid] += gNeuronInput[gnid] + gNeuronInput_I[gnid];
 			// if(nid==1)
 			// 	printf("vm:%f,vthres:%f,vreset:%f,refrac:%d\n",d_neurons->p_vm[nid],d_neurons->p_v_thresh[nid],d_neurons->p_v_reset[nid],d_neurons->p_refrac_time[nid] - 1);
 			float const V = d_neurons->p_vm[nid];
