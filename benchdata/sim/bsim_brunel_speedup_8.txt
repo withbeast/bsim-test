@@ -1,0 +1,52 @@
+===========
+model:brunel
+nsyn:1000000000
+npart:8
+rate:0.1
+build time:368.521 s
+setup:2552.306568
+part3:sim time:54.062991 s
+part7:sim time:54.063029 s
+part2:sim time:54.063005 s
+part6:sim time:54.063062 s
+part1:sim time:54.063065 s
+part4:sim time:54.063065 s
+part5:sim time:54.063099 s
+part0:sim time:54.066623 s
+3:fire rate:-nan hz
+2:fire rate:-nan hz
+6:fire rate:-nan hz
+7:fire rate:-nan hz
+4:fire rate:-nan hz
+5:fire rate:-nan hz
+1:fire rate:436.956085 hz
+0:fire rate:749.791016 hz
+sim time:60.382279
+end
+===========
+===========
+model:brunel
+nsyn:1000000000
+npart:8
+rate:0.2
+build time:371.62 s
+setup:2562.723165
+part2:sim time:81.837380 s
+part4:sim time:81.837426 s
+part7:sim time:81.837509 s
+part3:sim time:81.837426 s
+part5:sim time:81.837478 s
+part6:sim time:81.837479 s
+part1:sim time:81.841028 s
+part0:sim time:81.845419 s
+2:fire rate:-nan hz
+3:fire rate:-nan hz
+4:fire rate:-nan hz
+5:fire rate:-nan hz
+7:fire rate:-nan hz
+6:fire rate:-nan hz
+1:fire rate:456.957428 hz
+0:fire rate:1314.073975 hz
+sim time:88.121508
+end
+===========

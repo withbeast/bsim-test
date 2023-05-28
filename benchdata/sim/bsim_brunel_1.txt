@@ -1,0 +1,174 @@
+===========
+nsyn:200000000
+npart:1
+make brunel
+build time:72.7436 s
+setup:323.878602
+part0:sim time:3.592452 s
+part0:sim time:3.592951 s
+0:fire rate:74.971741 hz
+sim time:4.786937
+end
+===========
+done:1,200000000,0.005
+===========
+nsyn:200000000
+npart:1
+make brunel
+build time:72.866 s
+setup:326.513536
+part0:sim time:5.804496 s
+part0:sim time:5.803101 s
+0:fire rate:159.464615 hz
+sim time:7.013009
+end
+===========
+done:1,200000000,0.01
+===========
+nsyn:200000000
+npart:1
+make brunel
+build time:71.9048 s
+setup:330.022502
+part0:sim time:12.598024 s
+part0:sim time:12.601539 s
+0:fire rate:450.458435 hz
+sim time:13.833684
+end
+===========
+done:1,200000000,0.05
+===========
+nsyn:400000000
+npart:1
+make brunel
+build time:145.854 s
+setup:675.111045
+part0:sim time:4.742601 s
+part0:sim time:4.744087 s
+0:fire rate:80.547157 hz
+sim time:7.089491
+end
+===========
+done:1,400000000,0.005
+===========
+nsyn:400000000
+npart:1
+make brunel
+build time:145.944 s
+setup:669.998258
+part0:sim time:7.915031 s
+part0:sim time:7.915892 s
+0:fire rate:160.995529 hz
+sim time:10.270510
+end
+===========
+done:1,400000000,0.01
+===========
+nsyn:400000000
+npart:1
+make brunel
+build time:147.908 s
+setup:689.632801
+part0:sim time:17.727865 s
+part0:sim time:17.734488 s
+0:fire rate:450.482880 hz
+sim time:20.190102
+end
+===========
+done:1,400000000,0.05
+===========
+nsyn:600000000
+npart:1
+make brunel
+build time:221.976 s
+setup:1031.705478
+part0:sim time:5.844627 s
+part0:sim time:5.846678 s
+0:fire rate:81.342010 hz
+sim time:9.324374
+end
+===========
+done:1,600000000,0.005
+===========
+nsyn:600000000
+npart:1
+make brunel
+build time:222.222 s
+setup:1017.367111
+part0:sim time:11.148866 s
+part0:sim time:11.152908 s
+0:fire rate:162.509079 hz
+sim time:14.651327
+end
+===========
+done:1,600000000,0.01
+===========
+nsyn:600000000
+npart:1
+make brunel
+build time:221.088 s
+setup:1025.244924
+part0:sim time:25.631233 s
+part0:sim time:25.636963 s
+0:fire rate:450.504181 hz
+sim time:29.123497
+end
+===========
+done:1,600000000,0.05
+===========
+nsyn:800000000
+npart:1
+make brunel
+build time:299.986 s
+setup:1370.660522
+part0:sim time:7.323246 s
+part0:sim time:7.325856 s
+0:fire rate:82.132881 hz
+sim time:11.957560
+end
+===========
+done:1,800000000,0.005
+===========
+nsyn:800000000
+npart:1
+make brunel
+build time:295.194 s
+setup:1370.659976
+part0:sim time:13.873949 s
+part0:sim time:13.874120 s
+0:fire rate:164.019012 hz
+sim time:18.520002
+end
+===========
+done:1,800000000,0.01
+===========
+nsyn:800000000
+npart:1
+make brunel
+build time:296.553 s
+setup:1400.531029
+part0:sim time:33.406453 s
+part0:sim time:33.360470 s
+0:fire rate:450.492645 hz
+sim time:38.018486
+end
+===========
+done:1,800000000,0.05
+===========
+nsyn:1000000000
+npart:1
+make brunel
+build time:364.287 s
+setup:1730.965503
+part0:sim time:8.516283 s
+part0:sim time:8.518637 s
+0:fire rate:82.398483 hz
+sim time:14.248126
+end
+===========
+done:1,1000000000,0.005
+===========
+nsyn:1000000000
+npart:1
+make brunel
+build time:371.234 s

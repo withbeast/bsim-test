@@ -1,0 +1,132 @@
+===========
+model:brunel
+nsyn:250000000
+npart:1
+rate0.01
+build time:90.8694 s
+setup:411.274838
+part0:sim time:6.301691 s
+sim time:7.855209
+end
+===========
+===========
+model:brunel
+nsyn:250000000
+npart:1
+rate0.05
+build time:89.9205 s
+setup:432.836480
+part0:sim time:13.694330 s
+sim time:15.215170
+end
+===========
+===========
+model:brunel
+nsyn:250000000
+npart:1
+rate0.1
+build time:90.5154 s
+setup:420.792261
+part0:sim time:19.008824 s
+sim time:20.561636
+end
+===========
+===========
+model:brunel
+nsyn:250000000
+npart:1
+rate0.2
+build time:90.3311 s
+setup:426.770243
+part0:sim time:29.778667 s
+sim time:31.357630
+end
+===========
+===========
+model:brunel
+nsyn:500000000
+npart:1
+rate0.01
+build time:183.622 s
+setup:851.616913
+part0:sim time:8.986726 s
+sim time:11.969693
+end
+===========
+===========
+model:brunel
+nsyn:500000000
+npart:1
+rate0.05
+build time:181.439 s
+setup:851.399608
+part0:sim time:20.020480 s
+sim time:22.991100
+end
+===========
+===========
+model:brunel
+nsyn:500000000
+npart:1
+rate0.1
+build time:182.25 s
+setup:853.342098
+part0:sim time:28.299693 s
+sim time:31.272497
+end
+===========
+===========
+model:brunel
+nsyn:500000000
+npart:1
+rate0.2
+build time:182.641 s
+setup:852.313608
+part0:sim time:45.145614 s
+sim time:48.138877
+end
+===========
+===========
+model:brunel
+nsyn:750000000
+npart:1
+rate0.01
+build time:277.361 s
+setup:1290.542701
+part0:sim time:13.438509 s
+sim time:17.897883
+end
+===========
+===========
+model:brunel
+nsyn:750000000
+npart:1
+rate0.05
+build time:276.058 s
+setup:1315.980927
+part0:sim time:30.583036 s
+sim time:34.944278
+end
+===========
+===========
+model:brunel
+nsyn:750000000
+npart:1
+rate0.1
+build time:274.159 s
+setup:1299.207619
+part0:sim time:50.750826 s
+sim time:55.188656
+end
+===========
+===========
+model:brunel
+nsyn:750000000
+npart:1
+rate0.2
+build time:272.78 s
+setup:1344.331066
+part0:sim time:81.739391 s
+sim time:86.099950
+end
+===========

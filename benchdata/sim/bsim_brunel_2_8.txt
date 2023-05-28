@@ -1,0 +1,108 @@
+===========
+model:brunel
+nsyn:250000000
+npart:8
+rate0.1
+build time:90.388 s
+setup:620.795103
+part1:sim time:26.234274 s
+part7:sim time:26.234291 s
+part4:sim time:26.234334 s
+part5:sim time:26.234355 s
+part2:sim time:26.234362 s
+part6:sim time:26.234357 s
+part3:sim time:26.234359 s
+part0:sim time:26.237032 s
+sim time:28.052782
+end
+===========
+===========
+model:brunel
+nsyn:250000000
+npart:8
+rate0.2
+build time:90.1047 s
+setup:620.246082
+part7:sim time:38.745054 s
+part6:sim time:38.745037 s
+part4:sim time:38.745124 s
+part5:sim time:38.745127 s
+part2:sim time:38.745147 s
+part3:sim time:38.745203 s
+part1:sim time:38.746340 s
+part0:sim time:38.747017 s
+sim time:40.445806
+end
+===========
+===========
+model:brunel
+nsyn:500000000
+npart:8
+rate0.1
+build time:183.046 s
+setup:1257.284257
+part7:sim time:40.098307 s
+part2:sim time:40.098330 s
+part6:sim time:40.098345 s
+part3:sim time:40.098347 s
+part4:sim time:40.098336 s
+part5:sim time:40.098344 s
+part1:sim time:40.099196 s
+part0:sim time:40.100013 s
+sim time:43.323046
+end
+===========
+===========
+model:brunel
+nsyn:500000000
+npart:8
+rate0.2
+build time:182.368 s
+setup:1255.893263
+part6:sim time:65.884710 s
+part4:sim time:65.884767 s
+part3:sim time:65.884767 s
+part7:sim time:65.884795 s
+part5:sim time:65.884800 s
+part2:sim time:65.884771 s
+part1:sim time:65.886950 s
+part0:sim time:65.889814 s
+sim time:69.138076
+end
+===========
+===========
+model:brunel
+nsyn:750000000
+npart:8
+rate0.1
+build time:274.834 s
+setup:1944.891450
+part2:sim time:46.439897 s
+part7:sim time:46.439960 s
+part6:sim time:46.439971 s
+part1:sim time:46.439995 s
+part5:sim time:46.439970 s
+part4:sim time:46.439995 s
+part3:sim time:46.439969 s
+part0:sim time:46.443035 s
+sim time:51.186613
+end
+===========
+===========
+model:brunel
+nsyn:750000000
+npart:8
+rate0.2
+build time:274.226 s
+setup:1900.045586
+part5:sim time:72.357884 s
+part7:sim time:72.357950 s
+part4:sim time:72.357957 s
+part6:sim time:72.357957 s
+part3:sim time:72.357958 s
+part2:sim time:72.357958 s
+part1:sim time:72.363464 s
+part0:sim time:72.371618 s
+sim time:77.097571
+end
+===========

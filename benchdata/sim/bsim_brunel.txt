@@ -1,0 +1,17 @@
+===========
+model:brunel
+nsyn:2000
+npart:8
+build time:0.003195 s
+setup:1.535738
+part7:sim time:5.833108 s
+part3:sim time:5.833073 s
+part1:sim time:5.833082 s
+part5:sim time:5.833082 s
+part4:sim time:5.833131 s
+part2:sim time:5.833093 s
+part6:sim time:5.833094 s
+part0:sim time:5.833373 s
+sim time:5.877338
+end
+===========

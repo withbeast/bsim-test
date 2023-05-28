@@ -1,0 +1,51 @@
+===========
+model:brunel
+nsyn:80000000
+npart:1
+rate:0.1
+build time:29.2014 s
+==17925== NVPROF is profiling process 17925, command: ./lif_unit_test --nsyn=80000000 --net=brunel --rate=0.1
+setup:129.818068
+part0:sim time:13.263130 s
+0:fire rate:718.414490 hz
+sim time:13.862928
+end
+===========
+==17925== Profiling application: ./lif_unit_test --nsyn=80000000 --net=brunel --rate=0.1
+==17925== Profiling result:
+            Type  Time(%)      Time     Calls       Avg       Min       Max  Name
+ GPU activities:   90.82%  11.0729s     10000  1.1073ms  65.503us  5.3212ms  update_dense_static_hit(GStaticSynapses*, int, int)
+                    2.72%  331.43ms        31  10.691ms  1.3760us  171.89ms  [CUDA memcpy HtoD]
+                    2.33%  284.06ms     10000  28.406us  14.880us  39.583us  update_lifeb_neuron(GLIFEBNeurons*, int, int)
+                    1.44%  175.27ms     10000  17.527us  16.351us  20.640us  update_poisson_neuron(GPoissonNeurons*, int, int)
+                    1.26%  153.73ms     10000  15.373us  13.376us  19.872us  find_lifeb_neuron(GLIFEBNeurons*, int, int)
+                    0.44%  54.037ms     10000  5.4030us  5.2480us  6.3360us  deliver_neurons(int const *, int const *, int*, int*, int)
+                    0.41%  50.089ms     30005  1.6690us  1.4070us  13.536us  [CUDA memcpy DtoH]
+                    0.36%  43.939ms     10000  4.3930us  4.0630us  5.7600us  update_time(void)
+                    0.11%  13.298ms     10013  1.3280us  1.2790us  2.3040us  [CUDA memset]
+                    0.11%  12.806ms         1  12.806ms  12.806ms  12.806ms  curand_setup_kernel(curandStateXORWOW*, int)
+                    0.00%  4.1920us         1  4.1920us  4.1920us  4.1920us  init_buffers(float*, float*, int*, int*, int*, int*, int*)
+                    0.00%  2.4960us         1  2.4960us  2.4960us  2.4960us  init_log_buffers(int*, float*, int*)
+                    0.00%  2.2720us         1  2.2720us  2.2720us  2.2720us  init_connection(N2SConnection*)
+      API calls:   87.40%  7.06297s     30032  235.18us     162ns  172.42ms  cudaMemcpy
+                    7.00%  566.04ms         4  141.51ms  13.655us  443.44ms  cudaMallocHost
+                    3.93%  317.89ms     60004  5.2970us  3.8440us  4.7082ms  cudaLaunchKernel
+                    0.56%  45.487ms         2  22.744ms  31.782us  45.455ms  cudaFreeHost
+                    0.49%  39.637ms     10013  3.9580us  2.9530us  53.161us  cudaMemset
+                    0.18%  14.935ms       768  19.446us     152ns  3.4236ms  cuDeviceGetAttribute
+                    0.17%  13.908ms        38  366.01us     216ns  5.7727ms  cudaMalloc
+                    0.11%  9.2557ms         8  1.1570ms  886.20us  1.9128ms  cuDeviceTotalMem
+                    0.08%  6.5529ms         8  819.11us  71.854us  5.1355ms  cuDeviceGetName
+                    0.05%  4.2239ms        33  128.00us     264ns  2.5097ms  cudaFree
+                    0.01%  536.46us         2  268.23us  11.313us  525.14us  cudaDeviceSynchronize
+                    0.00%  72.498us         5  14.499us  9.2090us  34.531us  cudaMemcpyToSymbol
+                    0.00%  24.622us         8  3.0770us  1.2920us  7.2880us  cuDeviceGetPCIBusId
+                    0.00%  23.349us        40     583ns     341ns  7.6960us  cudaOccupancyMaxActiveBlocksPerMultiprocessorWithFlags
+                    0.00%  21.402us         9  2.3780us  1.6750us  5.0150us  cudaFuncGetAttributes
+                    0.00%  11.914us         1  11.914us  11.914us  11.914us  cudaGetDeviceCount
+                    0.00%  11.837us        36     328ns     239ns  2.2340us  cudaDeviceGetAttribute
+                    0.00%  11.286us         4  2.8210us     258ns  4.5280us  cudaSetDevice
+                    0.00%  7.3760us        16     461ns     167ns  1.4600us  cuDeviceGet
+                    0.00%  4.0420us         9     449ns     245ns  1.9780us  cudaGetDevice
+                    0.00%  2.6360us         3     878ns     291ns  1.8020us  cuDeviceGetCount
+                    0.00%  2.2890us         8     286ns     171ns     506ns  cuDeviceGetUuid
